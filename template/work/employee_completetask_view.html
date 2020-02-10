@@ -1,0 +1,26 @@
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <h2>{{task.title}}</h2><br>
+    <p>{{task.description}}</p><br>
+
+    {% if task.sender_file %}
+        <h3><a  href="{{task.sender_file.url}}">Required Document</a></h3><br>
+    {% else %}
+        <h3>Required Files : None</h3><br>
+    {% endif %}
+
+    <h3>Deadline : {{task.deadline}}</h3><br>
+    <div class="content-section">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Task</legend>
+                {{ form|crispy }}
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+{% endblock content %}

@@ -1,0 +1,27 @@
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+      <div class="media">
+        <img class="rounded-circle account-img" src="{{ user_.profile.profile_pic.url }}">
+        <div class="media-body">
+          <h2 class="account-heading">{{ user_.username }}</h2>
+          <p class="text-secondary">{{ user_.email }}</p>
+        </div>
+      </div>
+
+    {% for post in posts %}
+        <article class="media content-section">
+          <img class="rounded-circle article-img" src="{{ post.author.profile.profile_pic.url }}">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="{% url 'blog-postuser' post.author.username %}">{{ post.author }}</a>
+              <small class="text-muted">{{ post.date|date:"F d, Y" }}</small>
+            </div>
+            <h2><a class="article-title" href="{% url 'blog-postdetail' post.id %}">{{ post.title }}</a></h2>
+            <p class="article-content">{{ post.content }}</p>
+          </div>
+        </article>
+    {% endfor %}
+{% endblock content %}
+
